@@ -3,10 +3,10 @@ import time, subprocess, sys
 try:
     import vlc
 except:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'vlc'])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'python-vlc'])
     import vlc
 
-toxin = vlc.MediaPlayer("http://your_mp3_url")
+toxin = vlc.MediaPlayer("https://github.com/BarsTiger/roflProjects/raw/master/files/toxin.mp3")
 toxin.play()
 
 time.sleep(16)
