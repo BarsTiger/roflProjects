@@ -36,3 +36,5 @@ else:
 elapsed = time.time_ns() - timestart
 elapsed = elapsed / 1000000000
 print(str(datetime.timedelta(seconds=elapsed)))
+
+input()
