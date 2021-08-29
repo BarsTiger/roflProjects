@@ -29,8 +29,10 @@ def ultrasort(list):
     return sortedlist
 
 timestart = time.time_ns()
-
-print(ultrasort(list))
+if type == "1":
+    print(ultrasort(list))
+else:
+    print(sorted(list))
 elapsed = time.time_ns() - timestart
 elapsed = elapsed / 1000000000
 print(str(datetime.timedelta(seconds=elapsed)))
