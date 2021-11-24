@@ -29,6 +29,10 @@ massivmenu = {
         'Вывести массив как список': 'ezztui_return_value',
         'Назад': 'ezztui_back_value'
     },
+    'Действия с массивами': {
+        'Сложение массивов': 'ezztui_return_value',
+        'Перемешать массив': 'ezztui_return_value',
+    },
     'О программе': 'ezztui_return_value',
     'Выход': {
         'Назад': 'ezztui_back_value',
