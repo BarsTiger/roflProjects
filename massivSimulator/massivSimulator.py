@@ -28,6 +28,12 @@ massivmenu = {
         'Вывести массив одной строчкой': 'ezztui_return_value',
         'Вывести массив как список': 'ezztui_return_value',
         'Назад': 'ezztui_back_value'
+    },
+    'О программе': 'ezztui_return_value',
+    'Выход': {
+        'Назад': 'ezztui_back_value',
+        'KorvusTeam': 'ezztui_return_value',
+        'Выход': 'ezztui_exit_value'
     }
 }
 
