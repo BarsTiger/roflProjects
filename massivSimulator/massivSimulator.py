@@ -10,9 +10,9 @@ massivmenu = {
         'Создать массив': 'ezztui_return_value',
         'Выбрать текущий массив': 'ezztui_return_value',
         'Удалить массив': 'ezztui_return_value',
-        'Управление постоянными массивами': {
-            'Сохранить массивы на диск': 'ezztui_return_value',
-            'Загрузить массивы с диска': 'ezztui_return_value',
+        'Управление основательными массивами': {
+            'Сохранить массивы глубоко на диск': 'ezztui_return_value',
+            'Срезик массивов с диска': 'ezztui_return_value',
             'Назад': 'ezztui_back_value'
         },
         'Назад': 'ezztui_back_value'
@@ -20,7 +20,7 @@ massivmenu = {
     'Заполнение массивов': {
         'Заполнить массив случайными числами': 'ezztui_return_value',
         'Заполнить массив по заданному интервалу': 'ezztui_return_value',
-        'Заполнить массив вручную': 'ezztui_return_value',
+        'Заполнить массив вручную по крупицам': 'ezztui_return_value',
         'Назад': 'ezztui_back_value'
     },
     'Вывод массивов': {
@@ -32,6 +32,17 @@ massivmenu = {
     'Действия с массивами': {
         'Сложение массивов': 'ezztui_return_value',
         'Перемешать массив': 'ezztui_return_value',
+        'Отсортировать массив': {
+            'По возрастанию': 'ezztui_return_value',
+            'По убыванию': 'ezztui_return_value',
+            'Назад': 'ezztui_back_value'
+        },
+        'Назад': 'ezztui_back_value'
+    },
+    'Игры': {
+        'Игра "угадай массив"': 'ezztui_return_value',
+        'Игра "посчитай сумму"': 'ezztui_return_value',
+        'Назад': 'ezztui_back_value'
     },
     'О программе': 'ezztui_return_value',
     'Выход': {
