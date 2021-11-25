@@ -46,9 +46,9 @@ massivmenu = {
     },
     'О программе': 'ezztui_return_value',
     'Выход': {
+        'Выход': 'ezztui_exit_value',
         'Назад': 'ezztui_back_value',
         'KorvusTeam': 'ezztui_return_value',
-        'Выход': 'ezztui_exit_value'
     }
 }
 
