@@ -41,7 +41,7 @@ massivmenu = {
     },
     'Игры': {
         'Игра "угадай массив"': 'ezztui_return_value',
-        'Игра "посчитай сумму"': 'ezztui_return_value',
+        'Игра "посчитай сумму" - на развитие толковейшей головы': 'ezztui_return_value',
         'Назад': 'ezztui_back_value'
     },
     'О программе': 'ezztui_return_value',
