@@ -9,10 +9,10 @@ except:
     os.system(sys.executable + " -m pip install " + "ezztui")
     import ezztui
 try:
-    import progressbar
+    from progress.bar import ChargingBar
 except:
-    os.system(sys.executable + " -m pip install " + "progressbar")
-    import progressbar
+    os.system(sys.executable + " -m pip install " + "progress")
+    from progress.bar import ChargingBar
 
 massivmenu = {
     'Управление массивами': {
@@ -92,37 +92,134 @@ def create_massive():
     print('Назовите массив.'
           'Придумывайте основательное и глубокое название.'
           'Не делайте название на 70 слайдов, ведь его сложно прочитать')
-    input('Введите название: ')
+    name = input('Введите название: ')
+    massives[name] = []
+    current = name
+    input("Массив " + name + " создан! Сейчас он пустой. Вы можете заполнить его")
 
 def choose_current():
-    pass
+    global massives
+    global current
+    massives_menu = {}
+    for massive in list(massives):
+        massives_menu[massive] = 'ezztui_return_value'
+    current = ezztui.menu(massives_menu)
 
 def clear():
-    pass
+    global massives
+    massives_menu = {}
+    for massive in list(massives):
+        massives_menu[massive] = 'ezztui_return_value'
+    toclear = ezztui.menu(massives_menu)
+    massives_menu[toclear] = []
 
 def delete():
-    pass
+    global massives
+    massives_menu = {}
+    for massive in list(massives):
+        massives_menu[massive] = 'ezztui_return_value'
+    toclear = ezztui.menu(massives_menu)
+    massives.pop(toclear)
 
 def save_disk(mode):
-    pass
+    global massives
+    massivesfile = open('смачний.шматочок', 'w+')
+    json.dump(massives, massivesfile)
 
 def read_disk(mode):
-    pass
+    global massives
+    massivesfile = open('смачний.шматочок', 'r')
+    massives = json.load(massivesfile)
 
 def fill_random():
     global massives
     global current
     global fill_mode
+    needlen = None
+    while needlen == None:
+        try:
+            needlen = int(input('Введите, сколько элементов массива нужно создать и засунуть ♂deep♂ в массив: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    maxint = None
+    while maxint == None:
+        try:
+            maxint = int(input('Введите, каким максимально должно быть случайное число: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    minint = None
+    while minint == None:
+        try:
+            minint = int(input('Введите, каким минимально должно быть случайное число: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    if fill_mode == 'replace':
+        massives[current] = []
+    zapoln_bar = ChargingBar('Заполнение массива', max=needlen)
+    for i in range(needlen):
+        massives[current].append(random.randint(minint, maxint))
+        zapoln_bar.next()
+    input("Массив заполнен")
 
 def fill_interval():
     global massives
     global current
     global fill_mode
+    needlen = None
+    while needlen == None:
+        try:
+            needlen = int(input('Введите, сколько элементов массива нужно создать и засунуть ♂deep♂ в массив: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    maxint = None
+    while maxint == None:
+        try:
+            maxint = int(input('Введите, от какого числа будет заполняться массив: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    minint = None
+    while minint == None:
+        try:
+            minint = int(input('Введите, до какого числа будет заполняться массив: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    interval = None
+    while interval == None:
+        try:
+            interval = int(input('Введите интервал между числами: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    if fill_mode == 'replace':
+        massives[current] = []
+    zapoln_bar = ChargingBar('Заполнение массива', max=needlen)
+    prev = minint - interval
+    for i in range(needlen):
+        massives[current].append(prev + interval)
+        prev += interval
+        zapoln_bar.next()
+    input("Массив заполнен")
 
 def fill_user():
     global massives
     global current
     global fill_mode
+    needlen = None
+    while needlen == None:
+        try:
+            needlen = int(input('Введите, сколько элементов массива вы будете вводить и программа засунет их ♂deep♂ в массив: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    if fill_mode == 'replace':
+        massives[current] = []
+    for i in range(needlen):
+        add_this = None
+        while add_this == None:
+            try:
+                add_this = int(input())
+            except:
+                print("Введите число и не ломайте программу, я ее мозгами писал")
+        massives[current].append(add_this)
+    input("Массив заполнен")
 
 def sum_massives():
     global massives
