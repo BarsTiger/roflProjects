@@ -1,23 +1,51 @@
-import subprocess, sys
+import os
+import sys
+import json
+import pprint
 try:
     import ezztui
 except:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'ezztui'])
+    os.system(sys.executable + " -m pip install " + "ezztui")
     import ezztui
+try:
+    import progressbar
+except:
+    os.system(sys.executable + " -m pip install " + "progressbar")
+    import progressbar
 
 massivmenu = {
     'Управление массивами': {
         'Создать массив': 'ezztui_return_value',
         'Выбрать текущий массив': 'ezztui_return_value',
-        'Удалить массив': 'ezztui_return_value',
+        'Очистить массив': {
+            'Очистить': 'ezztui_return_value',
+            'Назад': 'ezztui_back_value'
+        },
+        'Удалить массив': {
+            'Удалить': 'ezztui_return_value',
+            'Назад': 'ezztui_back_value'
+        },
         'Управление основательными массивами': {
-            'Сохранить массивы глубоко на диск': 'ezztui_return_value',
-            'Срезик массивов с диска': 'ezztui_return_value',
+            'Сохранить массивы глубоко на диск': {
+                'Сохранить с заменой': 'ezztui_return_value',
+                'Сохранить с объединением': 'ezztui_return_value',
+                'Назад': 'ezztui_back_value'
+            },
+            'Срезик массивов с диска': {
+                'Срезик с заменой': 'ezztui_return_value',
+                'Срезик с объединением': 'ezztui_return_value',
+                'Назад': 'ezztui_back_value'
+            },
             'Назад': 'ezztui_back_value'
         },
         'Назад': 'ezztui_back_value'
     },
     'Заполнение массивов': {
+        'Режим заполнения': {
+            'Замена': 'ezztui_return_value',
+            'Добавление': 'ezztui_return_value',
+            'Назад': 'ezztui_back_value'
+        },
         'Заполнить массив случайными числами': 'ezztui_return_value',
         'Заполнить массив по заданному интервалу': 'ezztui_return_value',
         'Заполнить массив вручную по крупицам': 'ezztui_return_value',
@@ -52,4 +80,108 @@ massivmenu = {
     }
 }
 
-choice = ezztui.menu(massivmenu)
+massives = {}
+current = ''
+fill_mode = 'add'
+
+
+def create_massive():
+    global massives
+    global current
+    print('Назовите массив.'
+          'Придумывайте основательное и глубокое название.'
+          'Не делайте название на 70 слайдов, ведь его сложно прочитать')
+    input('Введите название: ')
+
+def choose_current():
+    pass
+
+def clear():
+    pass
+
+def delete():
+    pass
+
+def save_disk(mode):
+    pass
+
+def read_disk(mode):
+    pass
+
+def fill_random():
+    global massives
+    global current
+    global fill_mode
+
+def fill_interval():
+    global massives
+    global current
+    global fill_mode
+
+def fill_user():
+    global massives
+    global current
+    global fill_mode
+
+while True:
+    choice = ezztui.menu(massivmenu)
+    if choice[0] == 'Управление массивами':
+        if choice[1] == 'Создать массив':
+            create_massive()
+        elif choice[1] == 'Выбрать текущий массив':
+            choose_current()
+            input("Теперь вы работаете с массивом " + current)
+        elif choice[1] == 'Очистить массив':
+            clear()
+            input("Массив очищен")
+        elif choice[1] == 'Удалить массив':
+            delete()
+            input("Массив удален")
+        elif choice[1] == 'Управление основательными массивами':
+            if choice[2] == 'Сохранить массивы глубоко на диск':
+                save_disk('replace' if choice[3] == 'Сохранить с заменой' else 'merge')
+                input("Закладка массива произошла")
+            if choice[2] == 'Срезик массивов с диска':
+                read_disk('replace' if choice[3] == 'Срезик с заменой' else 'merge')
+                input("Закладку массива нашли и используют в металлургии")
+
+    if choice[0] == 'Заполнение массивов':
+        if choice[1] == 'Режим заполнения':
+            fill_mode = 'add' if choice[2] == 'Добавление' else 'replace'
+            print('Используется метод "' + choice[2] + '" при заполнении')
+            input()
+        elif choice[1] == 'Заполнить массив случайными числами':
+            fill_random()
+        elif choice[1] == 'Заполнить массив по заданному интервалу':
+            fill_interval()
+        elif choice[1] == 'Заполнить массив вручную по крупицам':
+            fill_user()
+
+    if choice[0] == 'Вывод массивов':
+        if choice[1] == 'Вывести массив по одному элементу':
+            try:
+                for i in massives[current]:
+                    print(i)
+                input()
+            except:
+                print("Возможно, у вас нет массивов или еще что-то не так")
+                input("Не ломайте прогу, я ее по крупицам писал")
+        if choice[1] == 'Вывести массив одной строчкой':
+            try:
+                massiveline = ''
+                for i in massives[current]:
+                    massiveline += str(i)
+                print(massiveline)
+                input()
+            except:
+                print("Возможно, у вас нет массивов или еще что-то не так")
+                input("Не ломайте прогу, я ее по крупицам писал")
+        if choice[1] == 'Вывести массив как список':
+            try:
+                print(massives[current])
+                input()
+            except:
+                print("Возможно, у вас нет массивов или еще что-то не так")
+                input("Не ломайте прогу, я ее по крупицам писал")
+
+
