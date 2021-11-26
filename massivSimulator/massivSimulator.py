@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import pprint
+import random
 try:
     import ezztui
 except:
@@ -123,6 +124,22 @@ def fill_user():
     global current
     global fill_mode
 
+def sum_massives():
+    global massives
+    global current
+
+def guess_game():
+    pass
+
+def sum_game():
+    pass
+
+def about():
+    pass
+
+def corvusTeam():
+    pass
+
 while True:
     choice = ezztui.menu(massivmenu)
     if choice[0] == 'Управление массивами':
@@ -145,7 +162,7 @@ while True:
                 read_disk('replace' if choice[3] == 'Срезик с заменой' else 'merge')
                 input("Закладку массива нашли и используют в металлургии")
 
-    if choice[0] == 'Заполнение массивов':
+    elif choice[0] == 'Заполнение массивов':
         if choice[1] == 'Режим заполнения':
             fill_mode = 'add' if choice[2] == 'Добавление' else 'replace'
             print('Используется метод "' + choice[2] + '" при заполнении')
@@ -157,7 +174,7 @@ while True:
         elif choice[1] == 'Заполнить массив вручную по крупицам':
             fill_user()
 
-    if choice[0] == 'Вывод массивов':
+    elif choice[0] == 'Вывод массивов':
         if choice[1] == 'Вывести массив по одному элементу':
             try:
                 for i in massives[current]:
@@ -166,7 +183,7 @@ while True:
             except:
                 print("Возможно, у вас нет массивов или еще что-то не так")
                 input("Не ломайте прогу, я ее по крупицам писал")
-        if choice[1] == 'Вывести массив одной строчкой':
+        elif choice[1] == 'Вывести массив одной строчкой':
             try:
                 massiveline = ''
                 for i in massives[current]:
@@ -176,7 +193,7 @@ while True:
             except:
                 print("Возможно, у вас нет массивов или еще что-то не так")
                 input("Не ломайте прогу, я ее по крупицам писал")
-        if choice[1] == 'Вывести массив как список':
+        elif choice[1] == 'Вывести массив как список':
             try:
                 print(massives[current])
                 input()
@@ -184,4 +201,32 @@ while True:
                 print("Возможно, у вас нет массивов или еще что-то не так")
                 input("Не ломайте прогу, я ее по крупицам писал")
 
+    elif choice[0] == 'Действия с массивами':
+        if choice[1] == 'Сложение массивов':
+            sum_massives()
+        elif choice[1] == 'Перемешать массив':
+            try:
+                random.shuffle(massives[current])
+                input('Кристалічну ґратку массива зруйновано')
+            except:
+                print("Возможно, у вас нет массивов или еще что-то не так")
+                input("Не ломайте прогу, я ее по крупицам писал")
+        elif choice[1] == 'Отсортировать массив':
+            try:
+                massives[current] = sorted(massives[current], reverse=False if choice[1] == 'По возрастанию' else True)
+                input('Кристалічну ґратку массива відновлено')
+            except:
+                print("Возможно, у вас нет массивов или еще что-то не так")
+                input("Не ломайте прогу, я ее по крупицам писал")
 
+    elif choice[0] == 'Игры':
+        if choice[1] == 'Игра "угадай массив"':
+            guess_game()
+        elif choice[1] == 'Игра "посчитай сумму" - на развитие толковейшей головы':
+            sum_game()
+
+    elif choice[0] == 'О программе':
+        about()
+
+    elif choice[0] == 'Выход' and choice[1] == 'KorvusTeam':
+        corvusTeam()
