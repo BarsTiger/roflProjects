@@ -89,9 +89,9 @@ fill_mode = 'add'
 def create_massive():
     global massives
     global current
-    print('Назовите массив.'
-          'Придумывайте основательное и глубокое название.'
-          'Не делайте название на 70 слайдов, ведь его сложно прочитать')
+    print('Назовите массив.\n'
+          'Придумывайте основательное и глубокое название.\n'
+          'Не делайте название на 70 слайдов, ведь его сложно прочитать\n')
     name = input('Введите название: ')
     massives[name] = []
     current = name
@@ -103,14 +103,14 @@ def choose_current():
     massives_menu = {}
     for massive in list(massives):
         massives_menu[massive] = 'ezztui_return_value'
-    current = ezztui.menu(massives_menu)
+    current = ezztui.menu(massives_menu)[0]
 
 def clear():
     global massives
     massives_menu = {}
     for massive in list(massives):
         massives_menu[massive] = 'ezztui_return_value'
-    toclear = ezztui.menu(massives_menu)
+    toclear = ezztui.menu(massives_menu)[0]
     massives_menu[toclear] = []
 
 def delete():
@@ -118,7 +118,7 @@ def delete():
     massives_menu = {}
     for massive in list(massives):
         massives_menu[massive] = 'ezztui_return_value'
-    toclear = ezztui.menu(massives_menu)
+    toclear = ezztui.menu(massives_menu)[0]
     massives.pop(toclear)
 
 def save_disk(mode):
@@ -224,9 +224,46 @@ def fill_user():
 def sum_massives():
     global massives
     global current
+    input('Нажмите Enter, чтобы выбрать первый массив')
+    massives_menu = {}
+    for massive in list(massives):
+        massives_menu[massive] = 'ezztui_return_value'
+    first = ezztui.menu(massives_menu)[0]
+    input('Нажмите Enter, чтобы выбрать второй массив')
+    second = ezztui.menu(massives_menu)[0]
+    print('Назовите новый массив.\n'
+          'Напомним, придумывайте основательное и глубокое название.\n'
+          'Не делайте название на 70 слайдов, ведь его сложно прочитать\n')
+    name = input('Введите название: ')
+    massives[name] = massives[first] + massives[second]
+
 
 def guess_game():
-    pass
+    input('Это игра "угадай массив"\n'
+          'Тут вы должны угадать массив, зная его длину\n'
+          'Потом вы увидите совпадение с оригинальным массивом в процентах\n'
+          'Порядок в массиве не считается')
+    length = random.randint(5, 10)
+    input("Ваша задача ввести массив из " + str(length) + " чисел от 0 до 100")
+    generated = list()
+    for i in range(length):
+        generated.append(random.randint(0, 100))
+    users = list()
+    for i in range(length):
+        add_this = None
+        while add_this == None:
+            try:
+                add_this = int(input("Введите число: "))
+            except:
+                print("Введите число и не ломайте программу, я ее мозгами писал")
+        users.append(add_this)
+    input("Ваш массив заполнен! Пришло время узнать, насколько вы ванга")
+    print("Наш массив - " + str(generated))
+    sovpalo = len(list(set(users) & set(generated)))
+    percent = (sovpalo/length) * 100
+    print("В двух массивах совпало " + str(sovpalo) + "! Это около " + str(percent) + "%")
+    input("Чё, ванга?" if percent >= 70 else "Немного не угадал" if percent >= 50 else "Меньше половины" if percent >= 30 else "Не ванга")
+
 
 def sum_game():
     pass
@@ -284,7 +321,7 @@ while True:
             try:
                 massiveline = ''
                 for i in massives[current]:
-                    massiveline += str(i)
+                    massiveline += str(i) + " "
                 print(massiveline)
                 input()
             except:
