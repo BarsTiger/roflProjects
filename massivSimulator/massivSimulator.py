@@ -124,12 +124,26 @@ def delete():
 def save_disk(mode):
     global massives
     massivesfile = open('смачний.шматочок', 'w+')
-    json.dump(massives, massivesfile)
+    if mode == "merge":
+        try:
+            massives_disk = json.load(massivesfile)
+            to_dump = massives | massives_disk
+            json.dump(to_dump, massivesfile)
+        except:
+            json.dump(massives, massivesfile)
+    else:
+        json.dump(massives, massivesfile)
 
 def read_disk(mode):
     global massives
     massivesfile = open('смачний.шматочок', 'r')
-    massives = json.load(massivesfile)
+    try:
+        if mode == "merge":
+            massives |= json.load(massivesfile)
+        else:
+            massives = json.load(massivesfile)
+    except:
+        massives = massives
 
 def fill_random():
     global massives
@@ -286,7 +300,9 @@ def sum_game():
     input("Ты победил! Ответ правильный!" if usr_sum == real_sum else "Ответ неправильный(")
 
 def about():
-    pass
+    ezztui.center_message("©KOTIKOT, script by BarsTiger")
+    ezztui.center_multiline(["Симулятор заполнения массива",
+                             "Python 3.9, меню основано на ezztui (by BarsTiger)"])
 
 def corvusTeam():
     pass
