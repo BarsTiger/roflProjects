@@ -1,7 +1,6 @@
 import os
 import sys
 import json
-import pprint
 import random
 try:
     import ezztui
