@@ -111,7 +111,7 @@ def clear():
     for massive in list(massives):
         massives_menu[massive] = 'ezztui_return_value'
     toclear = ezztui.menu(massives_menu)[0]
-    massives_menu[toclear] = []
+    massives[toclear] = []
 
 def delete():
     global massives
@@ -123,27 +123,35 @@ def delete():
 
 def save_disk(mode):
     global massives
-    massivesfile = open('смачний.шматочок', 'w+')
-    if mode == "merge":
+    if mode == 'merge':
         try:
-            massives_disk = json.load(massivesfile)
+            massivesread = open('смачний.шматочок', 'r')
+            massives_disk = json.load(massivesread)
             to_dump = massives | massives_disk
-            json.dump(to_dump, massivesfile)
+            massivesread.close()
+            massiveswrite = open('смачний.шматочок', 'w+')
+            json.dump(to_dump, massiveswrite, indent=3)
+            massiveswrite.close()
         except:
-            json.dump(massives, massivesfile)
+            massiveswrite = open('смачний.шматочок', 'w+')
+            json.dump(massives, massiveswrite, indent=3)
+            massiveswrite.close()
     else:
-        json.dump(massives, massivesfile)
+        massiveswrite = open('смачний.шматочок', 'w+')
+        json.dump(massives, massiveswrite, indent=3)
+        massiveswrite.close()
 
 def read_disk(mode):
     global massives
     massivesfile = open('смачний.шматочок', 'r')
     try:
-        if mode == "merge":
+        if mode == 'merge':
             massives |= json.load(massivesfile)
         else:
             massives = json.load(massivesfile)
     except:
         massives = massives
+    massivesfile.close()
 
 def fill_random():
     global massives
@@ -155,25 +163,28 @@ def fill_random():
             needlen = int(input('Введите, сколько элементов массива нужно создать и засунуть ♂deep♂ в массив: '))
         except:
             print("Введите число и не ломайте программу, я ее мозгами писал")
-    maxint = None
-    while maxint == None:
-        try:
-            maxint = int(input('Введите, каким максимально должно быть случайное число: '))
-        except:
-            print("Введите число и не ломайте программу, я ее мозгами писал")
     minint = None
     while minint == None:
         try:
             minint = int(input('Введите, каким минимально должно быть случайное число: '))
         except:
             print("Введите число и не ломайте программу, я ее мозгами писал")
-    if fill_mode == 'replace':
-        massives[current] = []
-    zapoln_bar = ChargingBar('Заполнение массива', max=needlen)
-    for i in range(needlen):
-        massives[current].append(random.randint(minint, maxint))
-        zapoln_bar.next()
-    input("\nМассив заполнен")
+    maxint = None
+    while maxint == None:
+        try:
+            maxint = int(input('Введите, каким максимально должно быть случайное число: '))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    try:
+        if fill_mode == 'replace':
+            massives[current] = []
+        zapoln_bar = ChargingBar('Заполнение массива', max=needlen)
+        for i in range(needlen):
+            massives[current].append(random.randint(minint, maxint))
+            zapoln_bar.next()
+        input("\nМассив заполнен")
+    except:
+        input("Что-то сломалось. Скорее всего, у вас нет массивов")
 
 def fill_interval():
     global massives
@@ -203,15 +214,20 @@ def fill_interval():
             interval = int(input('Введите интервал между числами: '))
         except:
             print("Введите число и не ломайте программу, я ее мозгами писал")
-    if fill_mode == 'replace':
-        massives[current] = []
-    zapoln_bar = ChargingBar('Заполнение массива', max=needlen)
-    prev = minint - interval
-    for i in range(needlen):
-        massives[current].append(prev + interval)
-        prev += interval
-        zapoln_bar.next()
-    input("\nМассив заполнен")
+
+    try:
+        if fill_mode == 'replace':
+            massives[current] = []
+        zapoln_bar = ChargingBar('Заполнение массива', max=needlen)
+        prev = minint - interval
+        for i in range(needlen):
+            massives[current].append(prev + interval)
+            prev += interval
+            zapoln_bar.next()
+        input("\nМассив заполнен")
+    except:
+        input("Что-то сломалось. Скорее всего, у вас нет массивов")
+
 
 def fill_user():
     global massives
@@ -223,17 +239,20 @@ def fill_user():
             needlen = int(input('Введите, сколько элементов массива вы будете вводить и программа засунет их ♂deep♂ в массив: '))
         except:
             print("Введите число и не ломайте программу, я ее мозгами писал")
-    if fill_mode == 'replace':
-        massives[current] = []
-    for i in range(needlen):
-        add_this = None
-        while add_this == None:
-            try:
-                add_this = int(input())
-            except:
-                print("Введите число и не ломайте программу, я ее мозгами писал")
-        massives[current].append(add_this)
-    input("Массив заполнен")
+    try:
+        if fill_mode == 'replace':
+            massives[current] = []
+        for i in range(needlen):
+            add_this = None
+            while add_this == None:
+                try:
+                    add_this = int(input())
+                except:
+                    print("Введите число и не ломайте программу, я ее мозгами писал")
+            massives[current].append(add_this)
+        input("Массив заполнен")
+    except:
+        input("Что-то сломалось. Скорее всего, у вас нет массивов")
 
 def sum_massives():
     global massives
@@ -302,10 +321,37 @@ def sum_game():
 def about():
     ezztui.center_message("©KOTIKOT, script by BarsTiger")
     ezztui.center_multiline(["Симулятор заполнения массива",
-                             "Python 3.9, меню основано на ezztui (by BarsTiger)"])
+                             "Собрано по крупицам на Python 3.9, меню основано на ezztui (by BarsTiger)",
+                             "За перевод и локализацию спасибо KorvusTeam",
+                             "По вопросам насчет заполнения массивов пишите на почту entin@dlit.dp.ua",
+                             "Остальные вопросы задавайте по адресу kozlova_t@dlit.dp.ua",
+                             "Пожалуйста, не задавайте потусторонних вопросов о сухариках"])
 
-def corvusTeam():
+def korvusTeam():
     pass
+
+ezztui.center_multiline(['  .......... .....  .....   ......  ...........  .....   ..........  .......................  ..........  ............',
+                         ' .@BBBBBBBBS.SBBBB* BBBBB.  SBBBB&!!@BBBBB&BBB# .@BBB&. !#BBBBBBBB# *#BBBBBBBBBB#SBBBBBBBBB% *#BBBBBBBBS$ %BBBBBBBBBB@.',
+                         ' %BBBBBBBBB@ &BBBB* BBBBB  .#BBBB@**@BBBBS%SBB#.*@BBB$  %BBBBBBBBB@ &BBBBBSBBBBB$@BBBBBBBS@! #BBBBBSBBBBB !BBBBBSBBBBB%',
+                         ' *BBBB&      &BBS$%@BBBBB  !#BBBB&$$&BBBB&.&BB#!$#BBS!  $BBB%@BBBB& @BBBB. SBBBB.  &BBBB*    &BBBB! BBBBB !BBBB@ @BBBB*',
+                         ' *BBBB&      &BB#%#BBBBBB  *#BBBBB##SBBBB#*$SBS@SBBS%. !@BBB!%BBBB& &BBBB* BBBBB   &BBBB*    &BBBB! BBBBB !BBBB@ @BBBB*',
+                         ' *BBBB&      &BBBSBBSSBBB  %#BBBSBBBBSBBB#*!*BBBBBB#.  *&BBB.%BBBB& @BBBBBBBBBBB.  &BBBB%    &BBBB! BBBBB !BBBBS@SBBBB%',
+                         ' *BBBB&      &BBBBBS$&BBB  @SBB#%#BB#%#BBS$. SBBBBB@   SBBBB *BBBB& .$BBBBBBBBBB.  &BBBB%    &BBBB! BBBBB !BBBBBBBBBBS*',
+                         ' *BBBB&      &BBBB&%%&BBB  @SBB#!#BB#!#BBB&. *&BBB@!  !BBBB# !BBBB&  %BBB$*BBBBB.  &BBBB*    &BBBB! BBBBB !BBBB#!!!*!.',
+                         ' %BBBBBBBBB& &BBBB* SBBBB !BBBB&.&BB&.&BBBB* *&BBB*  .%BBBS@ *BBBB& @BBBB* BBBBB.  &BBBB%    #BBBBBSBBBBB !BBBB&      ',
+                         ' !&BBBBBBBBS.SBBBB* BBBBB %BBBBS.SBBS.SBBBB% @BBBB.  !@BBB#% %BBBB# #BBBB! BBBBB.  SBBBB$    %#BBBBBBBBB$ %BBBBS      ',
+                         '',
+                         '              .BBBBB%.!SBBBB$  .%BBBBBBB@!   $SBBBBBBBB*!@BBBBBBBBS.SBBBB* BBBBB *BBBBBBBBBB@. *#BBBBBB#*             ',
+                         '              *BBBBB%**#BBBB$  .$SBBBBBB#%  .BBBBBBBBBS.%BBBBBBBBB@ &BBBB* BBBBB !BBBBBSBBBBB% %&BBBBBBS@             ',
+                         '             .*BBBBB@$$SBBBB$. !#BB###BBB@  .BBBBB      *BBBB&      &BBS$%@BBBBB !BBBB$ $BBBB* &SBS##SBB#             ',
+                         '             .%BBBBBS##BBBBB@! %BBB@$$SBB#  .BBBBB      %BBBB&      &BB#%#BBBBBB !BBBB#!#BBBB! BBB&$$&BBB.            ',
+                         '             !$BBBSSBBBBSBBB@! %BBB@%*#BB#.  BBBBB.     %BBBB&      &BBBSBBSSBBB !BBBBBBBBB&! .BBB&%*@BBB*            ',
+                         '             *&BBB@$BBB@$BBB#%!$BBBS##BBB#!  BBBBB      %BBBB&      &BBBBBS$&BBB !BBBB#%#BBS#*!BBBBS#SBBB%.           ',
+                         '             *&BBB$*BBB$*BBB#$!$BBBBBBBBBS%  BBBBB      *BBBB&      &BBBB&%%&BBB !BBBB@ @BBBB$!BBBBBBBBBB@!           ',
+                         '             &BBBB%!BBB%!BBBBB$&BBB%!!#BBS@. BBBBBBBBBS.%BBBBBBBBB& &BBBB* SBBBB !BBBBBSBBBBB&$BBB@!!$BBB&%           ',
+                         '             SBBBB$!BBB$!BBBBB#SBBB* .SBBB#! @BBBBBBBBB*!&BBBBBBBBS.SBBBB* BBBBB *BBBBBBBBBB&@#BBB@  @BBBS$           ',
+                         '             ...... .... ..........   .....  ..........  .......... .....  .....  .................  ......           '])
+ezztui.cls()
 
 while True:
     choice = ezztui.menu(massivmenu)
@@ -416,4 +462,4 @@ while True:
 
     elif choice[0] == 'Выход' and choice[1] == 'KorvusTeam':
         ezztui.cls()
-        corvusTeam()
+        korvusTeam()
