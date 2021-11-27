@@ -103,7 +103,10 @@ def choose_current():
     massives_menu = {}
     for massive in list(massives):
         massives_menu[massive] = 'ezztui_return_value'
-    current = ezztui.menu(massives_menu)[0]
+    try:
+        current = ezztui.menu(massives_menu)[0]
+    except:
+        print("Что-то не так. Возможно, у вас нет массивов")
 
 def clear():
     global massives
@@ -328,7 +331,10 @@ def about():
                              "Пожалуйста, не задавайте потусторонних вопросов о сухариках"])
 
 def korvusTeam():
-    pass
+    ezztui.center_multiline(["Спасибо KorvusTeam за русскую локализацию!",
+                             "Она была собрана по крупицам командой Korvus",
+                             "Перевод максимально основательный, глубокий и многосторонний",
+                             "Вы можете заказать переводы для своих приложений у Korvus"])
 
 ezztui.center_multiline(['  .......... .....  .....   ......  ...........  .....   ..........  .......................  ..........  ............',
                          ' .@BBBBBBBBS.SBBBB* BBBBB.  SBBBB&!!@BBBBB&BBB# .@BBB&. !#BBBBBBBB# *#BBBBBBBBBB#SBBBBBBBBB% *#BBBBBBBBS$ %BBBBBBBBBB@.',
@@ -350,7 +356,8 @@ ezztui.center_multiline(['  .......... .....  .....   ......  ...........  .....
                          '             *&BBB$*BBB$*BBB#$!$BBBBBBBBBS%  BBBBB      *BBBB&      &BBBB&%%&BBB !BBBB@ @BBBB$!BBBBBBBBBB@!           ',
                          '             &BBBB%!BBB%!BBBBB$&BBB%!!#BBS@. BBBBBBBBBS.%BBBBBBBBB& &BBBB* SBBBB !BBBBBSBBBBB&$BBB@!!$BBB&%           ',
                          '             SBBBB$!BBB$!BBBBB#SBBB* .SBBB#! @BBBBBBBBB*!&BBBBBBBBS.SBBBB* BBBBB *BBBBBBBBBB&@#BBB@  @BBBS$           ',
-                         '             ...... .... ..........   .....  ..........  .......... .....  .....  .................  ......           '])
+                         '             ...... .... ..........   .....  ..........  .......... .....  .....  .................  ......           ',
+                         '                                      Спасибо KorvusTeam за перевод на русский                                        '])
 ezztui.cls()
 
 while True:
@@ -442,7 +449,10 @@ while True:
         elif choice[1] == 'Отсортировать массив':
             ezztui.cls()
             try:
-                massives[current] = sorted(massives[current], reverse=False if choice[1] == 'По возрастанию' else True)
+                if choice[2] == 'По возрастанию':
+                    massives[current] = sorted(massives[current])
+                elif choice[2] == 'По убыванию':
+                    massives[current] = sorted(massives[current], reverse=True)
                 input('Кристалічну ґратку массива відновлено')
             except:
                 print("Возможно, у вас нет массивов или еще что-то не так")
