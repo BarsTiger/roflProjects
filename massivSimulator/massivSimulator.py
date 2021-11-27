@@ -159,7 +159,7 @@ def fill_random():
     for i in range(needlen):
         massives[current].append(random.randint(minint, maxint))
         zapoln_bar.next()
-    input("Массив заполнен")
+    input("\nМассив заполнен")
 
 def fill_interval():
     global massives
@@ -197,7 +197,7 @@ def fill_interval():
         massives[current].append(prev + interval)
         prev += interval
         zapoln_bar.next()
-    input("Массив заполнен")
+    input("\nМассив заполнен")
 
 def fill_user():
     global massives
@@ -266,7 +266,24 @@ def guess_game():
 
 
 def sum_game():
-    pass
+    input('Это игра "посчитай сумму"\n'
+          'Тут вы должны сложить все элементы массива и ввести сумму\n'
+          'Потом вы увидите правильный ответ')
+    length = random.randint(5, 10)
+    input("Ваша задача сложить массив из " + str(length) + " чисел от 0 до 10")
+    generated = list()
+    for i in range(length):
+        generated.append(random.randint(0, 10))
+    real_sum = sum(generated)
+    usr_sum = None
+    print(generated)
+    while usr_sum == None:
+        try:
+            usr_sum = int(input("Сложите все числа и введите число: "))
+        except:
+            print("Введите число и не ломайте программу, я ее мозгами писал")
+    print("Правильный ответ - " + str(real_sum))
+    input("Ты победил! Ответ правильный!" if usr_sum == real_sum else "Ответ неправильный(")
 
 def about():
     pass
@@ -278,38 +295,49 @@ while True:
     choice = ezztui.menu(massivmenu)
     if choice[0] == 'Управление массивами':
         if choice[1] == 'Создать массив':
+            ezztui.cls()
             create_massive()
         elif choice[1] == 'Выбрать текущий массив':
+            ezztui.cls()
             choose_current()
             input("Теперь вы работаете с массивом " + current)
         elif choice[1] == 'Очистить массив':
+            ezztui.cls()
             clear()
             input("Массив очищен")
         elif choice[1] == 'Удалить массив':
+            ezztui.cls()
             delete()
             input("Массив удален")
         elif choice[1] == 'Управление основательными массивами':
             if choice[2] == 'Сохранить массивы глубоко на диск':
+                ezztui.cls()
                 save_disk('replace' if choice[3] == 'Сохранить с заменой' else 'merge')
                 input("Закладка массива произошла")
             if choice[2] == 'Срезик массивов с диска':
+                ezztui.cls()
                 read_disk('replace' if choice[3] == 'Срезик с заменой' else 'merge')
                 input("Закладку массива нашли и используют в металлургии")
 
     elif choice[0] == 'Заполнение массивов':
         if choice[1] == 'Режим заполнения':
+            ezztui.cls()
             fill_mode = 'add' if choice[2] == 'Добавление' else 'replace'
             print('Используется метод "' + choice[2] + '" при заполнении')
             input()
         elif choice[1] == 'Заполнить массив случайными числами':
+            ezztui.cls()
             fill_random()
         elif choice[1] == 'Заполнить массив по заданному интервалу':
+            ezztui.cls()
             fill_interval()
         elif choice[1] == 'Заполнить массив вручную по крупицам':
+            ezztui.cls()
             fill_user()
 
     elif choice[0] == 'Вывод массивов':
         if choice[1] == 'Вывести массив по одному элементу':
+            ezztui.cls()
             try:
                 for i in massives[current]:
                     print(i)
@@ -318,6 +346,7 @@ while True:
                 print("Возможно, у вас нет массивов или еще что-то не так")
                 input("Не ломайте прогу, я ее по крупицам писал")
         elif choice[1] == 'Вывести массив одной строчкой':
+            ezztui.cls()
             try:
                 massiveline = ''
                 for i in massives[current]:
@@ -328,6 +357,7 @@ while True:
                 print("Возможно, у вас нет массивов или еще что-то не так")
                 input("Не ломайте прогу, я ее по крупицам писал")
         elif choice[1] == 'Вывести массив как список':
+            ezztui.cls()
             try:
                 print(massives[current])
                 input()
@@ -337,8 +367,10 @@ while True:
 
     elif choice[0] == 'Действия с массивами':
         if choice[1] == 'Сложение массивов':
+            ezztui.cls()
             sum_massives()
         elif choice[1] == 'Перемешать массив':
+            ezztui.cls()
             try:
                 random.shuffle(massives[current])
                 input('Кристалічну ґратку массива зруйновано')
@@ -346,6 +378,7 @@ while True:
                 print("Возможно, у вас нет массивов или еще что-то не так")
                 input("Не ломайте прогу, я ее по крупицам писал")
         elif choice[1] == 'Отсортировать массив':
+            ezztui.cls()
             try:
                 massives[current] = sorted(massives[current], reverse=False if choice[1] == 'По возрастанию' else True)
                 input('Кристалічну ґратку массива відновлено')
@@ -355,12 +388,16 @@ while True:
 
     elif choice[0] == 'Игры':
         if choice[1] == 'Игра "угадай массив"':
+            ezztui.cls()
             guess_game()
         elif choice[1] == 'Игра "посчитай сумму" - на развитие толковейшей головы':
+            ezztui.cls()
             sum_game()
 
     elif choice[0] == 'О программе':
+        ezztui.cls()
         about()
 
     elif choice[0] == 'Выход' and choice[1] == 'KorvusTeam':
+        ezztui.cls()
         corvusTeam()
