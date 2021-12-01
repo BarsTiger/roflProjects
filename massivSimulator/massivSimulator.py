@@ -13,6 +13,7 @@ except:
     os.system(sys.executable + " -m pip install " + "progress")
     from progress.bar import ChargingBar
 
+ezztui.check_curses()
 massivmenu = {
     'Управление массивами': {
         'Создать массив': 'ezztui_return_value',
